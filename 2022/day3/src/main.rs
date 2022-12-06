@@ -2,12 +2,17 @@ use std::collections::HashSet;
 use utils::*;
 
 fn item_priority(item: char) -> usize {
-    let mut priority = u8::try_from(item).unwrap() - b'A' + 27;
-    if priority > 52 {
-        priority = u8::try_from(item).unwrap() - b'a' + 1;
-    }
+    const LOWER_CASE: usize = 'a' as usize - 1;
+    const UPPER_CASE: usize = 'A' as usize - 27;
 
-    priority as usize
+    // Kudos to @jonmsawyer for showing me how straightforward this actually is
+    if ('a'..='z').contains(&item) {
+        item as usize - LOWER_CASE
+    } else if ('A'..='Z').contains(&item) {
+        item as usize - UPPER_CASE
+    } else {
+        panic!("Invalid item: '{item}'");
+    }
 }
 
 fn main() {
