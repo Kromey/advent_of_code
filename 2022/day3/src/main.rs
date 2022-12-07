@@ -51,19 +51,18 @@ fn main() {
     priorities = 0;
     let elves: Vec<_> = input.lines().collect();
     for team in elves.chunks_exact(3) {
-        let badge = team.iter().map(|elf| {
-            elf.chars().collect::<HashSet<_>>()
-        })
-        .reduce(|common, elf| common.intersection(&elf).copied().collect())
-        .unwrap()
-        .into_iter()
-        .next()
-        .unwrap();
+        let badge = team
+            .iter()
+            .map(|elf| elf.chars().collect::<HashSet<_>>())
+            .reduce(|common, elf| common.intersection(&elf).copied().collect())
+            .unwrap()
+            .into_iter()
+            .next()
+            .unwrap();
 
         let priority = item_priority(badge);
         print!("{badge}: {priority}; ");
         priorities += priority;
     }
     println!("\nTotal badge priorities: {priorities}");
-
 }

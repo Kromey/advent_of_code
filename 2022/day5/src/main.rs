@@ -43,7 +43,16 @@ fn main() {
     let mut initial_stacks = split.next().unwrap().lines().rev();
     let moves = split.next().unwrap();
 
-    let num_stacks = initial_stacks.next().unwrap().trim().chars().last().unwrap().to_digit(10).unwrap() as usize;    let mut stacks = vec![Vec::new(); num_stacks];
+    let num_stacks = initial_stacks
+        .next()
+        .unwrap()
+        .trim()
+        .chars()
+        .last()
+        .unwrap()
+        .to_digit(10)
+        .unwrap() as usize;
+    let mut stacks = vec![Vec::new(); num_stacks];
 
     for line in initial_stacks {
         let chs: Vec<_> = line.chars().collect();

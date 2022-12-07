@@ -1,4 +1,3 @@
-
 use std::cmp::Ordering;
 use utils::*;
 
@@ -6,7 +5,7 @@ use utils::*;
 enum Throw {
     Rock,
     Paper,
-    Scissors
+    Scissors,
 }
 
 impl Throw {
@@ -81,9 +80,8 @@ fn main() {
 
     let mut score = 0;
     for game in input.lines() {
-        let game: Vec<_> = game.split_whitespace()
-            .collect();
-        
+        let game: Vec<_> = game.split_whitespace().collect();
+
         let elf = Throw::from(game[0]);
         let me = match game[1] {
             "X" => elf.beats(),

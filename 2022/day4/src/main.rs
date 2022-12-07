@@ -9,13 +9,19 @@ fn main() {
     // 2-6,4-8";
     let input = read_puzzle_input!().unwrap();
 
-    let elves: Vec<_> = input.lines().map(|line| {
-        line.trim().split(',')
-            .map(|elf| {
-                let val = elf.split('-').map(|i| i.parse::<usize>().unwrap()).collect::<Vec<_>>();
-                (val[0], val[1])
-            })
-            .collect::<Vec<_>>()
+    let elves: Vec<_> = input
+        .lines()
+        .map(|line| {
+            line.trim()
+                .split(',')
+                .map(|elf| {
+                    let val = elf
+                        .split('-')
+                        .map(|i| i.parse::<usize>().unwrap())
+                        .collect::<Vec<_>>();
+                    (val[0], val[1])
+                })
+                .collect::<Vec<_>>()
         })
         .collect();
 
@@ -45,9 +51,12 @@ fn main() {
         let range_a = elf_a.0..=elf_a.1;
         let range_b = elf_b.0..=elf_b.1;
 
-        if range_a.contains(&elf_b.0) || range_a.contains(&elf_b.1) ||
-            range_b.contains(&elf_a.0) || range_b.contains(&elf_a.1) {
-                overlapped += 1;
+        if range_a.contains(&elf_b.0)
+            || range_a.contains(&elf_b.1)
+            || range_b.contains(&elf_a.0)
+            || range_b.contains(&elf_a.1)
+        {
+            overlapped += 1;
         }
     }
 
