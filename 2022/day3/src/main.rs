@@ -41,7 +41,7 @@ fn main() {
         for item in compartmenta.intersection(&compartmentb) {
             let priority = item_priority(*item);
             print!("{item}: {priority}; ");
-            priorities += priority as usize;
+            priorities += priority;
         }
     }
 
