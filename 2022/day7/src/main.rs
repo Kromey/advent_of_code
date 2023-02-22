@@ -12,7 +12,7 @@ enum Command<'a> {
 
 #[derive(Debug)]
 enum CommandError {
-    UnknownCommand(String)
+    UnknownCommand(String),
 }
 
 impl<'a> Command<'a> {
@@ -35,7 +35,7 @@ enum Listing<'a> {
 
 #[derive(Debug)]
 enum ListingError {
-    UnrecognizedFormat(String)
+    UnrecognizedFormat(String),
 }
 
 impl<'a> Listing<'a> {
@@ -137,14 +137,18 @@ fn main() -> Result<(), ParserError> {
 
     for line in input.lines() {
         match parse_line(line.trim())? {
-            Terminal::Command(command) => {
-                match command {
-                    Command::Cd(dir) => { pwd.push(dir); },
-                    Command::CdUp => { pwd.pop(); },
-                    Command::CdRoot => { pwd.truncate(1); },
-                    Command::List => {},
+            Terminal::Command(command) => match command {
+                Command::Cd(dir) => {
+                    pwd.push(dir);
                 }
-            }
+                Command::CdUp => {
+                    pwd.pop();
+                }
+                Command::CdRoot => {
+                    pwd.truncate(1);
+                }
+                Command::List => {}
+            },
             Terminal::Listing(list) => {
                 if let Listing::Directory(name) = list {
                     let path = vec![pwd.join("/").as_str(), name].join("/");
@@ -160,14 +164,18 @@ fn main() -> Result<(), ParserError> {
     }
 
     // Part 1
-    let sum: usize = dirs.iter().filter_map(|(_, size)| {
-        if *size <= 100_000 {
-            Some(*size)
-        } else {
-            None
-        }
-    })
-    .sum();
+    let sum: usize = dirs
+        .iter()
+        .filter_map(
+            |(_, size)| {
+                if *size <= 100_000 {
+                    Some(*size)
+                } else {
+                    None
+                }
+            },
+        )
+        .sum();
     println!("Sum of all directories up to 100KB: {sum}");
 
     // Part 2
@@ -187,7 +195,8 @@ fn main() -> Result<(), ParserError> {
 
     println!("\nAnalyzing disk space...\n");
 
-    if let Some((name, size)) = dirs.iter()
+    if let Some((name, size)) = dirs
+        .iter()
         .filter(|(_, size)| *size >= to_free)
         .min_by_key(|(_, size)| size)
     {
