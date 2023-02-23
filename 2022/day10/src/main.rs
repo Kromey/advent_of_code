@@ -13,6 +13,7 @@ fn main() {
     for op in input
         .trim()
         .lines()
+        // See note below about why we're flat_mapping here
         .flat_map(|line| line.split_whitespace())
     {
         if cycles.contains(&clock) {
@@ -21,6 +22,9 @@ fn main() {
             strengths += strength;
         }
 
+        // This is a bit of a cheat: Since `addx V` commands take 2 cycles, while `noop` takes 1,
+        // we can break up `addx V` into separate `addx` and `V` commands, and then only process
+        // `V` - which, coneniently, is only those "commands" which parse into an integer
         if let Ok(x) = op.parse::<i32>() {
             reg_x += x;
         }
