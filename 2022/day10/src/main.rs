@@ -34,7 +34,6 @@ fn main() {
     println!("\nTotal Strength: {strengths}");
 
     // Part 2: Rendering to a CRT
-    let mut crt = [false; 40 * 6];
     clock = 0;
     reg_x = 1;
 
@@ -43,25 +42,21 @@ fn main() {
         .lines()
         .flat_map(|line| line.split_whitespace())
     {
-        if reg_x.abs_diff(clock % 40) <= 1 {
-            crt[clock as usize] = true;
+        let px = clock % 40;
+        if px == 0 {
+            println!();
+        }
+
+        if reg_x.abs_diff(px) <= 1 {
+            print!("#");
+        } else {
+            print!(" ");
         }
 
         if let Ok(x) = op.parse::<i32>() {
             reg_x += x;
         }
         clock += 1;
-    }
-
-    for (idx, px) in crt.iter().enumerate() {
-        if idx % 40 == 0 {
-            println!();
-        }
-        if *px {
-            print!("#");
-        } else {
-            print!(" ");
-        }
     }
     println!();
 }
