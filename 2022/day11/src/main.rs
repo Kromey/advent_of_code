@@ -81,11 +81,29 @@ fn main() {
         let true_line = lines.next().unwrap();
         let false_line = lines.next().unwrap();
 
-        let items: Vec<_> = items_line[18..].split(',').map(|item| item.trim().parse::<Worry>().unwrap()).collect();
+        let items: Vec<_> = items_line[18..]
+            .split(',')
+            .map(|item| item.trim().parse::<Worry>().unwrap())
+            .collect();
         let operation = Operation::from(op_line);
-        let test = test_line.split_whitespace().last().unwrap().parse::<Worry>().unwrap();
-        let throw_true = true_line.split_whitespace().last().unwrap().parse::<usize>().unwrap();
-        let throw_false = false_line.split_whitespace().last().unwrap().parse::<usize>().unwrap();
+        let test = test_line
+            .split_whitespace()
+            .last()
+            .unwrap()
+            .parse::<Worry>()
+            .unwrap();
+        let throw_true = true_line
+            .split_whitespace()
+            .last()
+            .unwrap()
+            .parse::<usize>()
+            .unwrap();
+        let throw_false = false_line
+            .split_whitespace()
+            .last()
+            .unwrap()
+            .parse::<usize>()
+            .unwrap();
 
         monkeys.push(Monkey {
             items,
